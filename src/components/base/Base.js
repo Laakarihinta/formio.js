@@ -935,7 +935,8 @@ export class BaseComponent {
       this.emit('componentChange', {
         component: this.component,
         value: this.value,
-        validate: !noValidate
+        validate: !noValidate,
+        isValid: this.checkValidity()
       });
     }
   }
