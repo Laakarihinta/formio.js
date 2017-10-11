@@ -192,8 +192,14 @@ export class FileComponent extends BaseComponent {
                   // a click event on it.
                   let input = this.ce('input', {
                     type: 'file',
+                    style: {
+                      opacity: 0,
+                      position: 'absolute'
+                    },
                     onChange: () => {this.upload(input.files)}
                   });
+                  // Input needs to be in DOM and "visible" (opacity 0 is fine) for IE to display file dialog.
+                  document.body.appendChild(input);
                   // Trigger a click event on the input.
                   if (typeof input.trigger === 'function') {
                     input.trigger('click');
