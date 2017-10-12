@@ -37,6 +37,7 @@ export class FileComponent extends BaseComponent {
     this.addWarnings(this.element);
     this.buildUploadStatusList(this.element);
     this.createDescription(this.element);
+    this.hiddenFileInputElement = null;
   }
 
   refreshDOM() {
@@ -190,22 +191,21 @@ export class FileComponent extends BaseComponent {
                   event.preventDefault();
                   // There is no direct way to trigger a file dialog. To work around this, create an input of type file and trigger
                   // a click event on it.
-                  let input = this.ce('input', {
-                    type: 'file',
-                    style: {
-                      opacity: 0,
-                      position: 'absolute'
-                    },
-                    onChange: () => {this.upload(input.files)}
-                  });
-                  // Input needs to be in DOM and "visible" (opacity 0 is fine) for IE to display file dialog.
-                  document.body.appendChild(input);
+                  if (!this.hiddenFileInputElement) {
+                    this.hiddenFileInputElement = this.ce('input', {
+                      type: 'file',
+                      style: 'opacity: 0; position: absolute;',
+                      onChange: () => {this.upload(this.hiddenFileInputElement.files)}
+                    });
+                    // Input needs to be in DOM and "visible" (opacity 0 is fine) for IE to display file dialog.
+                    this.element.appendChild(this.hiddenFileInputElement);
+                  }
                   // Trigger a click event on the input.
-                  if (typeof input.trigger === 'function') {
-                    input.trigger('click');
+                  if (typeof this.hiddenFileInputElement.trigger === 'function') {
+                    this.hiddenFileInputElement.trigger('click');
                   }
                   else {
-                    input.click();
+                    this.hiddenFileInputElement.click();
                   }
                 }
               }, 'browse')
