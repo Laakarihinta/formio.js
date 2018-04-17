@@ -9,8 +9,8 @@ export class CurrencyComponent extends TextFieldComponent {
       mask: createNumberMask({
         prefix: '',
         suffix: '',
-        thousandsSeparatorSymbol: _get(this.component, 'thousandsSeparator', ','),
-        decimalSymbol: _get(this.component, 'decimalSymbol', '.'),
+        thousandsSeparatorSymbol: _get(this.component, 'thousandsSeparator', ''),
+        decimalSymbol: _get(this.component, 'decimalSymbol', ','),
         allowNegative: _get(this.component, 'allowNegative', false),
         allowDecimal: _get(this.component, 'allowDecimal', true)
       }),
